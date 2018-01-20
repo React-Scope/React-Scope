@@ -82,6 +82,7 @@ function createPanel() {
     return result;
   }
   
+  //May need for d3:
   // function messageReact(data) { // sending the message to the React App
   //   setTimeout(() => {
   //     window.postMessage({
@@ -107,6 +108,33 @@ function createPanel() {
     box = null;
     return data;
   }
+  // Here we are using a doubly linked list to store state changes
+  function StateCache() {
+    this.head = null;
+    this.tail = null;
+    this.length = 0; 
+  }
+
+  function Node(val) {
+    this.value = val;
+    this.next = null;
+    this.prev = null;
+  }
+
+  StateCache.prototype.addToHead = function (value) {
+    const data = stringifyData(value);
+    const node = new Node(data);
+
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.prev = this.head;
+      this.head.next = node;
+      this.head = node;
+    }
+    this.length++;
+  };
 }
 
 createPanel();
