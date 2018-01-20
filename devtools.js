@@ -32,6 +32,54 @@ function createPanel() {
       console.log(cleanData, 'result');
       return;
     });
+	}
+	
+  function retrieveState(string) {
+    switch (string) {
+      case 'current':
+        console.log(cleanData, 'current');
+        prevNode = cache.head.prev;
+        break;
+      case 'previous':
+        if (prevNode.prev) {
+          prevNode = prevNode.prev;
+          prevData = getChildren(prevNode.value.data.currentState[1].children[3]);
+          console.log(prevData, 'previous Data');
+        } else console.log('no more previous state');
+        break;
+      case 'next':
+        if (prevNode.next) {
+          prevNode = prevNode.next;
+          prevData = getChildren(prevNode.value.data.currentState[1].children[3]);
+          console.log(prevNode, 'next data');
+        } else console.log('no more next state');
+        break;
+      // case "next":
+      //     prevData = getChildren();
+      //     console.log(prevData, "initial Data")
+      //     break;
+      default:
+        prevNode = cache.head.prev;
+        console.log(cleanData, 'cleanData');
+    }
+  }
+
+  function getChildren(child) {
+    let result = [];
+    const node = child;
+
+    if (node.name !== 'div') {
+      result.push({
+        name: node.name,
+        props: node.props,
+        state: node.state,
+      });
+    }
+
+    Object.keys(node.children).forEach((key) => {
+      result = result.concat(getChildren(node.children[key]));
+    });
+    return result;
   }
   
   // function messageReact(data) { // sending the message to the React App
