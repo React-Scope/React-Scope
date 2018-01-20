@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "React-Scope",
-  "description": "Time Traveling Machine for State Changes",
+  "description": "Visualize your React code as it executes",
   "version": "1.0",
   "permissions": [
     "*://*/*"
