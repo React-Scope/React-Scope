@@ -144,6 +144,7 @@ function checkReactDOM(reactDOM) {
     return;
   }
   data.currentState = cache;
+  data.currentState[1].store = reduxStore15;
   // console.log('Store with Hierarchy: ', data);
   return data;
 }
@@ -175,7 +176,11 @@ function traverseFifteen(node, cache) {
   }
 
   // redux
-
+  if (targetNode.props) {
+    if (targetNode.type.name === 'Provider') {
+      component.store = targetNode.props.store.getState();
+    }
+  }
 
   // State
   if (node._instance && node._instance.state) {
@@ -238,7 +243,11 @@ function traverseComp(node, cache) {
   }
 
   // redux store
-
+  if (node.type) {
+    if (node.type.name === 'Provider') {
+      reduxStore15 = node.stateNode.store.getState();
+    }
+  }
 
   if (node.memoizedProps) {
     let props = [];
@@ -263,4 +272,9 @@ function traverseComp(node, cache) {
   }
 }
 
-
+function transmitData(state) {
+  console.log('cache', state);
+  // create a custom event to dispatch for actions for requesting data from background
+  const customEvent = new CustomEvent('React-Scope-Test', { detail: { data: stringifyData(state) } });
+  window.dispatchEvent(customEvent);
+}
