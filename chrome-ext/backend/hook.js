@@ -144,7 +144,7 @@ function checkReactDOM(reactDOM) {
     return;
   }
   data.currentState = cache;
-  data.currentState[1].store = reduxStore15;
+  data.currentState[0].store = reduxStore15;
   // console.log('Store with Hierarchy: ', data);
   return data;
 }
