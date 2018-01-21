@@ -9,6 +9,7 @@
 	"author": "React Scope",
 	"license": "MIT",
 	"dependencies": {
+		"d3": "^4.12.2",
 		"path": "^0.12.7"
 	},
 	"devDependencies": {
@@ -19,4 +20,4 @@
 		"eslint-config-airbnb": "^16.1.0",
 		"webpack": "^3.10.0"
 	}
- }
+}

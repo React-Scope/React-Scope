@@ -1,3 +1,6 @@
+import createTree from './createTree.js';
+
+
 function createPanel() {
   chrome.devtools.panels.create(
     'React-Scope', // title of the panel
@@ -13,6 +16,8 @@ function createPanel() {
   let prevNode; // track of previous state
   let reactData = {}; // current state data
 
+
+
   function sendMessage() {
     let port = chrome.runtime.connect({
       // name: 'ilhfmcnjanhibheilakfaahiehikcmgf',
@@ -26,13 +31,18 @@ function createPanel() {
     port.onMessage.addListener((msg) => {
       console.log('cache', cache);
       cache.addToHead(msg);
+
+      let stringifyCache = cache.head.value.data.currentState[0].children[0];
+      console.log('STRINGIFYCACHE', stringifyCache);
+      createTree(stringifyCache);
+
       reactData = cache.head.value.data.currentState[0];
       prevNode = cache.head.prev;
       cleanData = getChildren(reactData);
       console.log(cleanData, 'result');
       return;
     });
-	}
+  }
 	
   function retrieveState(string) {
     switch (string) {
