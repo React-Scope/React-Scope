@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "airbnb"
+  ],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-underscore-dangle": "off"
+  }
+}
