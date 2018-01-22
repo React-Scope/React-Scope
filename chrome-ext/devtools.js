@@ -1,5 +1,5 @@
 import createTree from './createTree.js';
-
+import $ from 'jquery';
 
 function createPanel() {
   chrome.devtools.panels.create(
@@ -11,10 +11,12 @@ function createPanel() {
 
   // let storage = {};
   const cache = new StateCache();
+  let currentState;
+  let treeInput;
   let cleanData = []; // clean data
-  let prevData = []; // previous state data
-  let prevNode; // track of previous state
   let reactData = {}; // current state data
+   // let prevData = []; // previous state data
+  // let prevNode; // track of previous state
 
 
 
@@ -31,18 +33,54 @@ function createPanel() {
     port.onMessage.addListener((msg) => {
       console.log('cache', cache);
       cache.addToHead(msg);
+      currentState = cache.head;
+      treeInput = currentState.value.data.currentState[0].children[0];
+      console.log('TREE DATA', treeInput);
+      createTree(treeInput);
 
-      let stringifyCache = cache.head.value.data.currentState[0].children[0];
-      console.log('STRINGIFYCACHE', stringifyCache);
-      createTree(stringifyCache);
-
-      reactData = cache.head.value.data.currentState[0];
-      prevNode = cache.head.prev;
-      cleanData = getChildren(reactData);
+      // reactData = cache.head.value.data.currentState[0];
+      // prevNode = cache.head.prev;
+      // cleanData = getChildren(reactData);
       console.log(cleanData, 'result');
       return;
     });
   }
+
+  //on click functionality:
+    //current state variable that starts a this.head;
+    //currentState.value holds the data;
+    //click events:
+      ////next: currentState = currentState.next;
+      ////prev: currentState = currentState.prev;
+      ////oldest: currentState = cache.tail;
+      ////newest: currentState = cache.head;
+ 
+  $(document).ready(function() {
+    $('#oldestBtn').click(function() {
+      console.log('OUCH!')
+      currentState = cache.tail;
+      createTree(treeInput);
+    })
+
+    $('#newestBtn').click(function() {
+      console.log('OUCH!')    
+      currentState = cache.head;
+      createTree(treeInput);      
+    })
+
+    $('#prevBtn').click(function() {
+      console.log('OUCH!')
+      currentState = currentState.prev;
+      createTree(treeInput);      
+    })
+
+    $('#nextBtn').click(function() {
+      console.log('OUCH!')
+      currentState = currentState.next;
+      createTree(treeInput);      
+    })
+  });
+  
 	
   function retrieveState(string) {
     switch (string) {
