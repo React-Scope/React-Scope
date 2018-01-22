@@ -10,6 +10,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"d3": "^4.12.2",
+		"jquery": "^3.3.1",
 		"path": "^0.12.7"
 	},
 	"devDependencies": {

@@ -163,6 +163,7 @@ function traverseFifteen(node, cache) {
     state: null,
     props: null,
     children: {},
+    store: null,
   };
 
   if (targetNode.type) {
@@ -228,6 +229,7 @@ function traverseComp(node, cache) {
     state: null,
     props: null,
     children: [],
+    store: null,
   };
   
   if (node.type) {

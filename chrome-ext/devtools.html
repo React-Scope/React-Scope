@@ -14,7 +14,7 @@
 
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
 
@@ -39,7 +39,60 @@
 
 </style>
 <body>
-<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 <script src="devtools.js"></script>
 <script src="./build/bundle.js"></script>
+</body> -->
+
+
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
+
+.node circle {
+  fill: blue;
+  stroke: yellow;
+  stroke-width: 10px;
+  border-radius: 50px;
+}
+
+.node text {
+  font: 16px sans-serif;
+  font-weight: bold;
+}
+
+.link {
+  fill: none;
+  stroke: purple;
+  stroke-width: 6px;
+}
+
+#tree {
+  height: 500px;
+  width: 500px;
+  border: 1px black solid;
+  margin: auto;
+  overflow: hidden;
+}
+
+#nodeData {
+  height: 500px;
+  width: 500px;
+  border: 1px black solid;
+  margin-top: auto;
+  overflow: hidden;
+}
+
+</style>
+
+<body>
+  <div id="tree"></div>
+  <div id="nodeData"></div>
+  <button id="prevBtn">Prev</button>
+  <button id="nextBtn">Next</button>
+
+
+<!-- load the d3.js library -->	
+  <script src="devtools.js"></script>
+  <script src="./build/bundle.js"></script>
+  <script src="./createTree.js"></script>
 </body>
