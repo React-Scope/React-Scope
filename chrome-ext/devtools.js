@@ -81,7 +81,7 @@ function createPanel() {
     });
     return result;
   }
-  
+
   //May need for d3:
   // function messageReact(data) { // sending the message to the React App
   //   setTimeout(() => {

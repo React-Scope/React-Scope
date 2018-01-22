@@ -1,6 +1,3 @@
-if (!window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
-  console.log('React Developer Tools must be installed for React Scope');
-}
 // added code for version 16 or lower
 var devTools = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 var reactInstances = devTools._renderers;
@@ -71,7 +68,16 @@ function stringifyData(obj) {
 
 // Monkey patch to listen for state changes
 (function connectReactDevTool() {
-  // console.log('entering connect ReactDevTool')
+  // Error if React Developer Tools is not installed
+  if (!window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+    console.log('React Developer Tools must be installed for React Scope');
+    return;
+  } else if (!reactInstance) {
+      // Error if React app is not detected
+    console.log('React not detected.');
+    return;
+  }
+
   // for react16 or 16+
   if (reactInstance.version) {
     devTools.onCommitFiberRoot = (function (original) {
@@ -229,7 +235,7 @@ function traverseComp(node, cache) {
     props: null,
     children: [],
   };
-  
+
   if (node.type) {
     if (node.type.name) {
       component.name = node.type.name;
@@ -273,7 +279,7 @@ function traverseComp(node, cache) {
 }
 
 function transmitData(state) {
-  console.log('cache', state);
+  // console.log('transmit', state);
   // create a custom event to dispatch for actions for requesting data from background
   const customEvent = new CustomEvent('React-Scope-Test', { detail: { data: stringifyData(state) } });
   window.dispatchEvent(customEvent);
