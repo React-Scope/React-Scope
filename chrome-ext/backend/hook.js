@@ -79,14 +79,14 @@ function stringifyData(obj) {
   }
 
   // for react16 or 16+
-  if (reactInstance.version) {
+  if (reactInstance && reactInstance.version) {
     devTools.onCommitFiberRoot = (function (original) {
       return function (...args) {
         getFiberDOM16(args[1]);
         return original(...args);
       };
     }(devTools.onCommitFiberRoot));
-  } else if (reactInstance.Mount) {
+  } else if (reactInstance && reactInstance.Mount) {
     // lower than React 16
     reactInstance.Reconciler.receiveComponent = (function (original) {
       return function (...args) {
@@ -145,7 +145,7 @@ function checkReactDOM(reactDOM) {
   let cache = [];
   if (reactDOM) {
     // console.log(reactDOM.current);
-    traverseComp(reactDOM.current, cache); // maybe there is no need to use stateNode.current
+    traverseSixteen(reactDOM.current, cache); // maybe there is no need to use stateNode.current
   } else {
     return;
   }
@@ -227,7 +227,7 @@ function traverseFifteen(node, cache) {
 }
 
 // traverse React 16 fiber DOM
-function traverseComp(node, cache) {
+function traverseSixteen(node, cache) {
   // LinkedList Style
   let component = {
     name: '',
@@ -271,10 +271,10 @@ function traverseComp(node, cache) {
   component.children = [];
   cache.push(component)
   if (node.child !== null) {
-    traverseComp(node.child, component.children);
+    traverseSixteen(node.child, component.children);
   }
   if (node.sibling !== null) {
-    traverseComp(node.sibling, cache);
+    traverseSixteen(node.sibling, cache);
   }
 }
 
