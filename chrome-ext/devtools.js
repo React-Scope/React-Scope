@@ -83,15 +83,6 @@ function createPanel() {
     })
   });
   
-	
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
-	}
->>>>>>> 2f2764a5f9e5ab3abd6835980f68711a64dbd12b
   
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
@@ -138,10 +129,6 @@ function createPanel() {
     return;
   }
 
-<<<<<<< HEAD
->>>>>>> c73c72957559f0f036dab84318965951a1b49797
-=======
->>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
   function retrieveState(string) {
     switch (string) {
       case 'current':
