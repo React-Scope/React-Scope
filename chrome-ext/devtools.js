@@ -34,7 +34,7 @@ function createPanel() {
       console.log('cache', cache);
       cache.addToHead(msg);
       currentState = cache.head;
-      treeInput = currentState.value.data.currentState[0].children[0];
+      treeInput = currentState.value.data.currentState[0];
       console.log('TREE DATA', treeInput);
       createTree(treeInput);
 

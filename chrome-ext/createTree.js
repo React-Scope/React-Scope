@@ -46,7 +46,7 @@ function collapse(d) {
 }
 
   
-// declares a tree layout and assigns the size
+// declares a tree layout and assigns the size 
 var treemap = d3.tree().nodeSize([170, 170]);
 function createTree(data) {
 treeData = data;
@@ -159,9 +159,23 @@ function update(source) {
                 .attr("height", 100)
                 .attr("stroke", "black")
                 .attr("stroke-width", 1)
+                .on('mouseover', function (d) {
+                    d3.selectAll("rect")
+                      .style('stroke-width', 1)
+                      .style('stroke', 'black');
+                    d3.select(this)
+                      .style('stroke-width', 5)
+                      .style('stroke', 'yellow');
+                    console.log("HI?!", d)
+                    console.log('TESTING PROPS', d.data.props)
+                    console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
+                    console.log('TESTING NAME', d.data.name)                       
+                })
                 .style("fill", function(d) {
           return d._children ? "lightsteelblue" : "#fff";
       });
+
+ 
 
   // Add labels for the nodes
   
@@ -282,4 +296,5 @@ function update(source) {
     update(d);
   }
 
+  
 export default createTree;
