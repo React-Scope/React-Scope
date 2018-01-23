@@ -1,8 +1,8 @@
 const connections = {};
-//this is where it's causing the weird synax error that says instances has been declared already
+//Listeners for the background to communicate with the devtool 
 chrome.runtime.onConnect.addListener(function(devtoolsConnections) {
-  console.log('connected to addlistener devltoolsconnections')
-  var devToolsRequest = (message, sender, sendResponse) => {
+  console.log('connected to addListener devltoolsconnections')
+  var devToolsRequest = (message, sender, response) => {
     chrome.tabs.executeScript(message.tabId, { file: 'content_script.js'});
   }
   devtoolsConnections.onMessage.addListener(devToolsRequest);
@@ -12,7 +12,7 @@ chrome.runtime.onConnect.addListener(function(devtoolsConnections) {
 });
 
 chrome.runtime.onConnect.addListener(function (port) {
-  let extensionListener = (message, sender, response) => {
+  var extensionListener = (message, sender, response) => {
     if (message.name == 'connect' && message.tabId) {
       chrome.tabs.sendMessage(message.tabId, message);
       connections[message.tabId] = port;
@@ -43,10 +43,10 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
     if (tabId in connections) {
       connections[tabId].postMessage(req)
     } else {
-      console.log('Tab not found!');
+      console.log('Cannot find the tab!');
     }
   } else {
-    console.log('Sender.tab is not defined');
+    console.log('Sender.tab is undefined');
   }
   return true;
 });
