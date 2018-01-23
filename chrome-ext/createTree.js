@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import $ from 'jquery';
 
 var treeData;
 // Set the dimensions and margins of the diagram
@@ -153,7 +154,7 @@ function update(source) {
 
   // Add Rectangle for the nodes
   nodeEnter.append("rect")
-  							.attr('x',-70)
+  							.attr('x',-70) //text position
 								.attr('y',-120)
                 .attr("width", 200)
                 .attr("height", 100)
@@ -166,10 +167,16 @@ function update(source) {
                     d3.select(this)
                       .style('stroke-width', 5)
                       .style('stroke', 'yellow');
-                    console.log("HI?!", d)
+                      $('#nodeData').empty();
+                      $('#nodeData').append("<h2>Name:"+ JSON.stringify(d.data.name, null, 2)+ "</h2>");
+                      $('#nodeData').append("<p>props:"+ JSON.stringify(d.data.props, null, 2)+ "</p>");
+                      $('#nodeData').append("<p>state:"+ JSON.stringify(d.data.state, null, 2)+ "</p>");
+                      $('#nodeData').append("<p>store:"+ JSON.stringify(d.data.store, null, 2)+ "</p>");
+
+                    // console.log("HI?!", d)
                     console.log('TESTING PROPS', d.data.props)
-                    console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
-                    console.log('TESTING NAME', d.data.name)                       
+                    // console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
+                    // console.log('TESTING NAME', d.data.name)                       
                 })
                 .style("fill", function(d) {
           return d._children ? "lightsteelblue" : "#fff";
@@ -178,7 +185,7 @@ function update(source) {
  
 
   // Add labels for the nodes
-  
+  // box size
   nodeEnter.append("text").attr("x", 0).attr("y", -40).attr("width",150 + 20)
                 .attr("dy", ".35em").attr("text-anchor", "middle").text(function(d) { return d.data.name; }).call(wrap, 80);
   /*nodeEnter.append('text')
@@ -243,7 +250,7 @@ function update(source) {
 
   // Enter any new links at the parent's previous position.
   var linkEnter = link.enter().insert('path', "g")
-			.attr("class", "link")
+            .attr("class", "link")
       .attr('d', function(d){
         var o = {x: source.x, y: source.y}
         return diagonal(o, o)

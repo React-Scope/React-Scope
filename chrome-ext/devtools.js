@@ -56,24 +56,28 @@ function createPanel() {
   $(document).ready(function() {
     $('#oldestBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = cache.tail;
       createTree(treeInput);
     })
 
     $('#newestBtn').click(function() {
       console.log('OUCH!')    
+      $('#nodeData').empty();
       currentState = cache.head;
       createTree(treeInput);      
     })
 
     $('#prevBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = currentState.prev;
       createTree(treeInput);      
     })
 
     $('#nextBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = currentState.next;
       createTree(treeInput);      
     })
@@ -124,7 +128,6 @@ function createPanel() {
     console.log('All components are being re-rendered without any state changes at all for: ', count, " time(s).")
     return;
   }
-
 
   function retrieveState(string) {
     switch (string) {
