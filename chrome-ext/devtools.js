@@ -1,3 +1,6 @@
+import createTree from './createTree.js';
+import $ from 'jquery';
+
 function createPanel() {
   chrome.devtools.panels.create(
     'React-Scope', // title of the panel
@@ -8,10 +11,14 @@ function createPanel() {
 
   // let storage = {};
   const cache = new StateCache();
+  let currentState;
+  let treeInput;
   let cleanData = []; // clean data
-  let prevData = []; // previous state data
-  let prevNode; // track of previous state
   let reactData = {}; // current state data
+   // let prevData = []; // previous state data
+  // let prevNode; // track of previous state
+
+
 
   function sendMessage() {
     let port = chrome.runtime.connect({
@@ -24,12 +31,63 @@ function createPanel() {
     port.onMessage.addListener((msg) => {
       console.log('cache', cache);
       cache.addToHead(msg);
-      reactData = cache.head.value.data.currentState[0];
-      prevNode = cache.head.prev;
-      cleanData = getChildren(reactData);
+      currentState = cache.head;
+      treeInput = currentState.value.data.currentState[0];
+      console.log('TREE DATA', treeInput);
+      createTree(treeInput);
+
+      // reactData = cache.head.value.data.currentState[0];
+      // prevNode = cache.head.prev;
+      // cleanData = getChildren(reactData);
       console.log(cleanData, 'result');
       return;
     });
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
+  }
+
+  //on click functionality:
+    //current state variable that starts a this.head;
+    //currentState.value holds the data;
+    //click events:
+      ////next: currentState = currentState.next;
+      ////prev: currentState = currentState.prev;
+      ////oldest: currentState = cache.tail;
+      ////newest: currentState = cache.head;
+ 
+  $(document).ready(function() {
+    $('#oldestBtn').click(function() {
+      console.log('OUCH!')
+      currentState = cache.tail;
+      createTree(treeInput);
+    })
+
+    $('#newestBtn').click(function() {
+      console.log('OUCH!')    
+      currentState = cache.head;
+      createTree(treeInput);      
+    })
+
+    $('#prevBtn').click(function() {
+      console.log('OUCH!')
+      currentState = currentState.prev;
+      createTree(treeInput);      
+    })
+
+    $('#nextBtn').click(function() {
+      console.log('OUCH!')
+      currentState = currentState.next;
+      createTree(treeInput);      
+    })
+  });
+  
+	
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
 	}
   
   //to check which stateful components are being re-rendered without having any state changes
@@ -77,6 +135,10 @@ function createPanel() {
     return;
   }
 
+<<<<<<< HEAD
+>>>>>>> c73c72957559f0f036dab84318965951a1b49797
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
   function retrieveState(string) {
     switch (string) {
       case 'current':
@@ -179,5 +241,7 @@ function createPanel() {
     this.length++;
   };
 }
+
+
 
 createPanel();
