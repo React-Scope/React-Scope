@@ -251,7 +251,6 @@ function update(source) {
   // Enter any new links at the parent's previous position.
   var linkEnter = link.enter().insert('path', "g")
             .attr("class", "link")
-            // .attr("stroke", "black")
       .attr('d', function(d){
         var o = {x: source.x, y: source.y}
         return diagonal(o, o)
