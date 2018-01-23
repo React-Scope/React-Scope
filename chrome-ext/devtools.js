@@ -56,31 +56,34 @@ function createPanel() {
   $(document).ready(function() {
     $('#oldestBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = cache.tail;
       createTree(treeInput);
     })
 
     $('#newestBtn').click(function() {
       console.log('OUCH!')    
+      $('#nodeData').empty();
       currentState = cache.head;
       createTree(treeInput);      
     })
 
     $('#prevBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = currentState.prev;
       createTree(treeInput);      
     })
 
     $('#nextBtn').click(function() {
       console.log('OUCH!')
+      $('#nodeData').empty();
       currentState = currentState.next;
       createTree(treeInput);      
     })
   });
   
 	
-	}
   
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])

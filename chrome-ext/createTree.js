@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import $ from 'jquery';
 
 var treeData;
 // Set the dimensions and margins of the diagram
@@ -166,10 +167,16 @@ function update(source) {
                     d3.select(this)
                       .style('stroke-width', 5)
                       .style('stroke', 'yellow');
-                    console.log("HI?!", d)
+                      $('#nodeData').empty();
+                      $('#nodeData').append("<h2>Name:"+ JSON.stringify(d.data.name, null, 2)+ "</h2>");
+                      $('#nodeData').append("<p>props:"+ JSON.stringify(d.data.props, null, 2)+ "</p>");
+                      $('#nodeData').append("<p>state:"+ JSON.stringify(d.data.state, null, 2)+ "</p>");
+                      $('#nodeData').append("<p>store:"+ JSON.stringify(d.data.store, null, 2)+ "</p>");
+
+                    // console.log("HI?!", d)
                     console.log('TESTING PROPS', d.data.props)
-                    console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
-                    console.log('TESTING NAME', d.data.name)                       
+                    // console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
+                    // console.log('TESTING NAME', d.data.name)                       
                 })
                 .style("fill", function(d) {
           return d._children ? "lightsteelblue" : "#fff";
