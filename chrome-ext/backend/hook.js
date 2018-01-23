@@ -264,8 +264,10 @@ function traverseSixteen(node, cache) {
       keys.forEach((key) => {
         props.push(node.memoizedProps[key]);
       });
-      // need to parse the props if it is a function or an array or an object
-      component.props = props[0] || props;
+			// need to parse the props if it is a function or an array or an object
+			if (props.length === 1) component.props = props[0];
+     else component.props = props;
+      // component.props = props[0] || props;
     } else {
       component.props = node.memoizedProps;
     }
