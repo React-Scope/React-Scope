@@ -6,6 +6,8 @@ function injectScript(file, body) {
   bodyHead.appendChild(script);
 }
 
+injectScript(chrome.runtime.getURL('/backend/hook.js'), 'body');
+
 window.addEventListener('message', (event) => {
   if (event.source !== window) 
   return;
@@ -16,4 +18,4 @@ window.addEventListener("React-Scope-Test", (message) => {
 }, false)
 
 
-injectScript(chrome.runtime.getURL('/backend/hook.js'), 'body');
+

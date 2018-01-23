@@ -22,8 +22,6 @@ function createPanel() {
 
   function sendMessage() {
     let port = chrome.runtime.connect({
-      // name: 'ilhfmcnjanhibheilakfaahiehikcmgf',
-      // name: 'gipfpnbcdiknjomlnphmckabkmoeebon'
       name: chrome.runtime.id,
     });
     port.postMessage({
@@ -82,6 +80,53 @@ function createPanel() {
   });
   
 	
+	}
+  
+  //to check which stateful components are being re-rendered without having any state changes
+  //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
+  function checkOptComponents(currentArray, prevArray, cache) {
+    let badRendered = [];
+    let goodRendered = [];
+    //check for state(s)
+    for (let i = 0 ; i < currentArray.length; i++) {
+      if (currentArray[i].state !== null) {
+        if (JSON.stringify(currentArray[i].state) === JSON.stringify(prevArray[i].state)) {
+          if (currentArray[i].name !== undefined) {
+            badRendered.push(currentArray[i].name)
+          }
+        }
+        else if (currentArray[i].name !== undefined) {
+            goodRendered.push(currentArray[i].name)
+        }
+      }
+      //check the store(s)
+      if (currentArray[i].store !== null) {
+        if (JSON.stringify(currentArray[i].store) === JSON.stringify(prevArray[i].store)) {
+          if (currentArray[i].name !== undefined) {
+            badRendered.push(currentArray[i].name)
+          }
+        }
+        else if (currentArray[i].name !== undefined) {
+          goodRendered.push(currentArray[i].name)
+        }
+      }
+    }
+    console.log("Stateful components being re-rendered WITHOUT state changes: ", badRendered)
+    console.log('Stateful components that are rendered WITH state changes: ', goodRendered)
+
+    //count how many times the components is being re-rendered without having any state changes at all
+    let count = 0; 
+    let current = cache.head; 
+    let previous = cache.head.prev
+    while (current!== null && previous !== null && JSON.stringify(current.value.data) === JSON.stringify(previous.value.data)) {
+      count++
+      current = current.prev;
+      previous = previous.prev
+    }
+    console.log('All components are being re-rendered without any state changes at all for: ', count, " time(s).")
+    return;
+  }
+
   function retrieveState(string) {
     switch (string) {
       case 'current':
@@ -129,7 +174,7 @@ function createPanel() {
     });
     return result;
   }
-  
+
   //May need for d3:
   // function messageReact(data) { // sending the message to the React App
   //   setTimeout(() => {
