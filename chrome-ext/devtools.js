@@ -32,7 +32,7 @@ function createPanel() {
       console.log('cache', cache);
       cache.addToHead(msg);
       currentState = cache.head;
-      treeInput = currentState.value.data.currentState[0].children[0];
+      treeInput = currentState.value.data.currentState[0];
       console.log('TREE DATA', treeInput);
       createTree(treeInput);
 
@@ -43,6 +43,9 @@ function createPanel() {
       return;
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
   }
 
   //on click functionality:
@@ -81,7 +84,10 @@ function createPanel() {
   });
   
 	
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
 	}
   
   //to check which stateful components are being re-rendered without having any state changes
@@ -129,7 +135,10 @@ function createPanel() {
     return;
   }
 
+<<<<<<< HEAD
 >>>>>>> c73c72957559f0f036dab84318965951a1b49797
+=======
+>>>>>>> d681a7eb87403164f624b50eb911bf3ed337a3ee
   function retrieveState(string) {
     switch (string) {
       case 'current':
