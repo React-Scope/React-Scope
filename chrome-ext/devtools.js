@@ -40,7 +40,9 @@ function createPanel() {
       // prevNode = cache.head.prev;
       // cleanData = getChildren(reactData);
       console.log(cleanData, 'result');
-      return;
+      let currentArray = getChildren(cache.head.value.data.currentState[0])
+      let prevArray = getChildren(cache.head.prev.value.data.currentState[0])
+      return checkOptComponents(currentArray, prevArray, cache);
     });
   }
 
@@ -87,29 +89,32 @@ function createPanel() {
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
   function checkOptComponents(currentArray, prevArray, cache) {
-    let badRendered = [];
-    let goodRendered = [];
+    console.log('curr: ', currentArray);
+    console.log('prev: ', prevArray)
+    let badRendered = {};
+    let goodRendered = {};
     //check for state(s)
     for (let i = 0 ; i < currentArray.length; i++) {
       if (currentArray[i].state !== null) {
         if (JSON.stringify(currentArray[i].state) === JSON.stringify(prevArray[i].state)) {
           if (currentArray[i].name !== undefined) {
-            badRendered.push(currentArray[i].name)
+            // badRendered.push(currentArray[i].name)
+            badRendered[currentArray[i].id] = currentArray[i].name
           }
         }
         else if (currentArray[i].name !== undefined) {
-            goodRendered.push(currentArray[i].name)
+          goodRendered[currentArray[i].id] = currentArray[i].name
         }
       }
       //check the store(s)
       if (currentArray[i].store !== null) {
         if (JSON.stringify(currentArray[i].store) === JSON.stringify(prevArray[i].store)) {
           if (currentArray[i].name !== undefined) {
-            badRendered.push(currentArray[i].name)
+            badRendered[currentArray[i].id] = currentArray[i].name
           }
         }
         else if (currentArray[i].name !== undefined) {
-          goodRendered.push(currentArray[i].name)
+          goodRendered[currentArray[i].id] = currentArray[i].name
         }
       }
     }
@@ -163,13 +168,15 @@ function createPanel() {
     let result = [];
     const node = child;
 
-    if (node.name !== 'div') {
+    // if (node.name !== 'div') {
       result.push({
         name: node.name,
+        id: node.id,
         props: node.props,
         state: node.state,
+        store: node.store
       });
-    }
+    // }
 
     Object.keys(node.children).forEach((key) => {
       result = result.concat(getChildren(node.children[key]));
