@@ -274,12 +274,12 @@ function traverseSixteen(node, cache) {
 
     // component.props = node.memoizedProps;
     component.props = stringifyData(node.memoizedProps)
-    if (node.type.name) {
-      console.log(node.type.name, ": ", node.memoizedProps)
-    }
-    if (typeof node.type === 'string') {
-      console.log(node.type, ": ", node.memoizedProps)
-    }
+    // if (node.type.name) {
+    //   console.log(node.type.name, ": ", node.memoizedProps)
+    // }
+    // if (typeof node.type === 'string') {
+    //   console.log(node.type, ": ", node.memoizedProps)
+    // }
   }
 
   component.children = [];
@@ -296,6 +296,6 @@ function transmitData(state) {
   // console.log('cache', state);
   // console.log('transmit', state);
   // create a custom event to dispatch for actions for requesting data from background
-  const customEvent = new CustomEvent('React-Scope-Test', { detail: { data: stringifyData(state) } });
+  const customEvent = new CustomEvent('React-Scope', { detail: { data: stringifyData(state) } });
   window.dispatchEvent(customEvent);
 }
