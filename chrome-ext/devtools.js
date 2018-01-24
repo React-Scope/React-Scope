@@ -22,7 +22,6 @@ function createPanel() {
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     port.onMessage.addListener((msg) => {
-      console.log(msg)
       if (msg.data) {
         console.log('cache', cache);
         cache.addToHead(msg.data);
