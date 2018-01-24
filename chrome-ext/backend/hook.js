@@ -274,12 +274,12 @@ function traverseSixteen(node, cache) {
 
     // component.props = node.memoizedProps;
     component.props = stringifyData(node.memoizedProps)
-    if (node.type.name) {
-      console.log(node.type.name, ": ", node.memoizedProps)
-    }
-    if (typeof node.type === 'string') {
-      console.log(node.type, ": ", node.memoizedProps)
-    }
+    // if (node.type.name) {
+    //   console.log(node.type.name, ": ", node.memoizedProps)
+    // }
+    // if (typeof node.type === 'string') {
+    //   console.log(node.type, ": ", node.memoizedProps)
+    // }
   }
 
   component.children = [];

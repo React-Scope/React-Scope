@@ -1,5 +1,9 @@
-test('There are changes from the prevoius components to the current components.', () => {
-  expect(reactOpt(currentMock, prevMock)).toBeFalsy();
+test('Both App and Row have no state changes.', () => {
+  expect(reactOpt(curr1, prev1)).toContain("App", "Row");
+});
+
+test('Row is being re-rendered unnecessarily.', () => {
+  expect(reactOpt(curr2, prev2)).toContain("Row");
 });
 
 test('The output data of the stringifyData function should be an object', () => {
@@ -22,6 +26,10 @@ test('The length of cache should be 2', () => {
   expect((cacheLength)).toBe(2)
 });
 
+test('The head and the tail of the cache are not the same.', () => {
+  expect((head)).not.toBe(tail)
+});
+
 //-------------------------------------Mock Data and Mock Function------------------------------------
 //the function below is mock function and data is test whether it is able to detect any components' state changes
 function reactOpt(currentArray, prevArray, cache) {
@@ -30,7 +38,7 @@ function reactOpt(currentArray, prevArray, cache) {
   let result = {};
   for (let i = 0 ; i < currentArray.length; i++) {
     if (currentArray[i].state !== null) {
-      if (JSON.stringify(currentArray[i].state) === JSON.stringify(prevArray[i].state)) {
+      if ((currentArray[i].state) === (prevArray[i].state)) {
         if (currentArray[i].name.length > 0) {
           badRendered.push(currentArray[i].name)
         }
@@ -42,7 +50,7 @@ function reactOpt(currentArray, prevArray, cache) {
       }
     }
     if (currentArray[i].store !== null) {
-      if (JSON.stringify(currentArray[i].store) === JSON.stringify(prevArray[i].store)) {
+      if ((currentArray[i].store) === (prevArray[i].store)) {
         if (currentArray[i].name.length > 0) {
           badRendered.push(currentArray[i].name)
         }
@@ -54,18 +62,19 @@ function reactOpt(currentArray, prevArray, cache) {
       }
     }
   }
-  result[goodRendered] = (JSON.stringify(goodRendered));
-  result[badRendered] = (JSON.stringify(badRendered));
-  if (result.goodRendered !== result.badRendered) {
-    return true
-  }
-  else {
-    return false;
-  }
+  result[goodRendered] = ((goodRendered));
+  result[badRendered] = ((badRendered));
+  // if (result.goodRendered === result.badRendered) {
+  //   return false
+  // }
+  return result[badRendered];
 }
 
-let currentMock = [{name: "App", state: {turn: true}}, {name: "Row", state: {turn: false}}]
-let prevMock = [{name: "App", state: {turn: true}}, {name: "Row", state: {turn: false}}]
+let curr1 = [{name: "App", state: true}, {name: "Row", state: false}]
+let prev1 = [{name: "App", state: true}, {name: "Row", state: false}]
+
+let curr2 = [{name: "App", state: true}, {name: "Row", state: true}]
+let prev2 = [{name: "App", state: false}, {name: "Row", state: true}]
 
 
 //The mock function below is to test whether stringifyData can accurately convert an input to a new input that is of the same type. 
@@ -142,3 +151,8 @@ var cacheLength = cache.length;
 // test('The length of cache should be 2', () => {
 //   expect((cacheLength)).toBe(2)
 // });
+
+var head = cache.head.value;
+var tail = cache.tail.value;
+
+
