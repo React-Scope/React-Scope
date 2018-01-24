@@ -18,8 +18,6 @@ function createPanel() {
    // let prevData = []; // previous state data
   // let prevNode; // track of previous state
 
-
-
   function sendMessage() {
     let port = chrome.runtime.connect({
       name: chrome.runtime.id,
@@ -90,8 +88,6 @@ function createPanel() {
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
   function checkOptComponents(currentArray, prevArray, cache) {
-    console.log('curr: ', currentArray);
-    console.log('prev: ', prevArray)
     let badRendered = {};
     let goodRendered = {};
     //check for state(s)
@@ -184,17 +180,6 @@ function createPanel() {
     });
     return result;
   }
-
-  //May need for d3:
-  // function messageReact(data) { // sending the message to the React App
-  //   setTimeout(() => {
-  //     window.postMessage({
-  //       message: 'hello there from devtool.js!',
-  //       data,
-  //     }, '*');
-  //   }, 10);
-  //   return data;
-  // }
 
   // convert data to JSON for storage
   function stringifyData(obj) {
