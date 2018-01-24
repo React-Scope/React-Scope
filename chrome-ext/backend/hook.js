@@ -267,13 +267,13 @@ function traverseSixteen(node, cache) {
     // } else {
     //   component.props = node.memoizedProps;
     // }
-    if (node.type.name) {
-      console.log(node.type.name, ":" , node.memoizedProps)
-    }
-    if (typeof node.type === 'string') {
-      console.log(node.type, ":" , node.memoizedProps)
-    }
-    component.props = node.memoizedProps;
+    // if (node.type.name) {
+    //   console.log(node.type.name, ":" , node.memoizedProps)
+    // }
+    // if (typeof node.type === 'string') {
+    //   console.log(node.type, ":" , node.memoizedProps)
+    // }
+    component.props = stringifyData(node.memoizedProps);
   }
   component.children = [];
   cache.push(component)
