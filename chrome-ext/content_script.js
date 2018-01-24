@@ -13,9 +13,11 @@ window.addEventListener('message', (event) => {
   return;
 });
 
-window.addEventListener("React-Scope-Test", (message) => {
-  chrome.runtime.sendMessage(message.detail)
-}, false)
+window.addEventListener("React-Scope", (message) => {
+  chrome.runtime.sendMessage({ data: message.detail });
+}, false);
 
-
-
+// send message to devtools on page refresh
+window.addEventListener("beforeunload", function() {
+  chrome.runtime.sendMessage({ refresh: "true" });
+}, false);
