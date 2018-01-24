@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { parseSvg } from "d3-interpolate/src/transform/parse";
 import $ from 'jquery';
 
 var treeData;
@@ -14,27 +15,38 @@ var margin = {top: 20, right: 90, bottom: 30, left: 90},
     rectW=60,
     root;
 
+const minZoom = 0.05; // min zoom distance
+const maxZoom = 2; // max zoom distance
+
+const zoom = d3.zoom()
+  .scaleExtent([minZoom, maxZoom])
+  .on('zoom', zoomed);
+
 
 var svg = d3.select("#tree")
+    .classed('svg-container', true)
     .append("svg")
+    .attr('viewBox', `-440 150 ${height} ${width}`)
+    .attr('preserveAspectRatio', 'xMinYMid meet')
     .attr("width","100%")
-    .attr("height", 800)
+    // .attr("height", 800)
+    .classed('svg-content-responsive', true)
 	.call(d3.zoom()
-    .scaleExtent([1 / 2, 12])
+    // .scaleExtent([1 / 2, 12])
     .on("zoom", zoomed))
   .append("g")
-    .attr("transform", "translate("
-          + (width/2) + "," + margin.top + ")");
+    // .attr("transform", "translate("
+    //       + (width/2) + "," + margin.top + ")");
 function zoomed() {
   svg.attr("transform", d3.event.transform);
-  /*
+  
   // this is intended to start the zoom at center where the current node is 
-  var transform = d3.event.transform,
-      point = transform.invert(center);
-      console.log("point",point, "focus", focus)
-  transform = transform.translate(point[0] - focus[0], point[1] - focus[1]);
-  svg.attr("transform", transform);
-  */
+//   var transform = d3.event.transform,
+//       point = transform.invert(center);
+// //       console.log("point",point, "focus", focus)
+//   transform = transform.translate(point[0] - focus[0], point[1] - focus[1]);
+//   svg.attr("transform", transform);
+
  }
 
 
@@ -49,21 +61,21 @@ function collapse(d) {
   
 // declares a tree layout and assigns the size 
 var treemap = d3.tree().nodeSize([170, 170]);
-function createTree(data) {
-treeData = data;
-// Assigns parent, children, height, depth
-root = d3.hierarchy(treeData, function(d) { return d.children; });
+// export function createTree(data) {
+// treeData = data;
+// // Assigns parent, children, height, depth
+// root = d3.hierarchy(treeData, function(d) { return d.children; });
   
-//form x and y axis
-root.x0 = width/2;
-root.y0 = height/2;
+// //form x and y axis
+// root.x0 = width/2;
+// root.y0 = height/2;
 
 
-// Collapse after the second level
-root.children.forEach(collapse);
+// // Collapse after the second level
+// root.children.forEach(collapse);
 
-update(root);
-};
+// update(root);
+// };
 
 // Collapse the node and all it's children
   
@@ -79,9 +91,6 @@ update(root);
         } else {
             return text;
         }
-
-
-
     }
 function wrap(text, width) {
         text.each(function () {
@@ -129,7 +138,7 @@ function update(source) {
 
   // Normalize for fixed-depth.
   nodes.forEach(function(d){ 
-    console.log(d);
+    // console.log(d);
     //if(d.depth == 1){
     	d.y = d.depth * 180;  
     //}else{
@@ -142,7 +151,7 @@ function update(source) {
 
   // Update the nodes...
   var node = svg.selectAll('g.node')
-      .data(nodes, function(d) {console.log(d);return d.id || (d.id = ++i); });
+      .data(nodes, function(d) {/*console.log(d);*/return d.id || (d.id = ++i); });
 
   // Enter any new modes at the parent's previous position.
   var nodeEnter = node.enter().append('g')
@@ -283,10 +292,10 @@ function update(source) {
   // Creates a curved (diagonal) path from parent to the child nodes
   function diagonal(s, d) {
 
-    path = `M ${s.x} ${s.y}
-            C ${(s.x + d.x)/2} ${s.y},
-              ${(s.x + d.x) / 2} ${d.y},
-              ${d.x} ${d.y}`
+    const path = `M ${s.x} ${s.y}
+                C ${(s.x + d.x)/2} ${s.y},
+                ${(s.x + d.x) / 2} ${d.y},
+                ${d.x} ${d.y}`
 
     return path
   }
@@ -303,5 +312,45 @@ function update(source) {
     update(d);
   }
 
+  export function createTree(data) {
+    treeData = data;
+    // Assigns parent, children, height, depth
+    root = d3.hierarchy(treeData, function(d) { return d.children; });
+      
+    //form x and y axis
+    root.x0 = width/2;
+    root.y0 = height/2;
+    
+    
+    // Collapse after the second level
+    // root.children.forEach(collapse);
+    
+    update(root);
+    };
+
+  export function zoomIn() {
+    const currentTransform = d3.select('.svg-content-responsive > g').attr('transform');
+    const { translateX, translateY, scaleX } = parseSvg(currentTransform);
+    let newZoom = scaleX * 1.5;
+    newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
   
-export default createTree;
+    const transform = d3.zoomIdentity
+      .translate(translateX, translateY)
+      .scale(newZoom);
+    d3.select('.svg-content-responsive').transition().duration(1).call(zoom.transform, transform);
+  }
+  
+  /** Zooms out D3 graph */
+  export function zoomOut() {
+    const currentTransform = d3.select('.svg-content-responsive > g').attr('transform');
+    const { translateX, translateY, scaleX } = parseSvg(currentTransform);
+    let newZoom = scaleX / 1.5;
+    newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
+  
+    const transform = d3.zoomIdentity
+      .translate(translateX, translateY)
+      .scale(newZoom);
+    d3.select('.svg-content-responsive').transition().duration(1).call(zoom.transform, transform);
+  }
+  
+// export default createTree;

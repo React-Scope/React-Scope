@@ -1,4 +1,4 @@
-import createTree from './createTree.js';
+import * as D3Chart from './createTree.js';
 import $ from 'jquery';
 
 function createPanel() {
@@ -17,13 +17,23 @@ function createPanel() {
   let reactData = {}; // current state data
    // let prevData = []; // previous state data
   // let prevNode; // track of previous state
-
-
+  let curr;
+  let prev;
+  const addListeners = () => {
+    document.querySelector('#zIn').addEventListener('click', D3Chart.zoomIn);
+    document.querySelector('#zOut').addEventListener('click', D3Chart.zoomOut);
+  
+    // call a zoom in / zoom out to fix first pan/drag event,
+    // without this, first dragging chart will cause it to jump on screen
+    D3Chart.zoomIn();
+    D3Chart.zoomOut();
+  };
 
   function sendMessage() {
     let port = chrome.runtime.connect({
       name: chrome.runtime.id,
     });
+    addListeners();
     port.postMessage({
       name: 'connect',
       tabId: chrome.devtools.inspectedWindow.tabId,
@@ -34,8 +44,7 @@ function createPanel() {
       currentState = cache.head;
       treeInput = currentState.value.data.currentState[0];
       console.log('TREE DATA', treeInput);
-      createTree(treeInput);
-
+      D3Chart.createTree(treeInput);
       // reactData = cache.head.value.data.currentState[0];
       // prevNode = cache.head.prev;
       // cleanData = getChildren(reactData);
@@ -55,31 +64,53 @@ function createPanel() {
  
   $(document).ready(function() {
     $('#oldestBtn').click(function() {
-      console.log('OUCH!')
+      console.log('Tail')
       $('#nodeData').empty();
       currentState = cache.tail;
-      createTree(treeInput);
+      D3Chart.createTree(currentState.value.data.currentState[0]);
     })
 
     $('#newestBtn').click(function() {
-      console.log('OUCH!')    
+      console.log('Head')    
       $('#nodeData').empty();
+      $('#opt').empty();
       currentState = cache.head;
-      createTree(treeInput);      
+      if (currentState && currentState.prev) {
+        curr = getChildren(currentState.value.data.currentState[0])
+        prev = getChildren(currentState.prev.value.data.currentState[0])
+        console.log('prev', prev)
+        let result = checkOptComponents(curr,prev, cache)
+        $('#opt').append("<p>stateful Comp re-render w/o state changes:"+ JSON.stringify(result[0], null, 2)+ "</p>");
+        $('#opt').append("<p>stateful Comp re-render w/ state changes:"+ JSON.stringify(result[1], null, 2)+ "</p>");
+        $('#opt').append("<p>All components re-render w/o state changes:"+ JSON.stringify(result[2], null, 2)+ "</p>");
+      }
+      D3Chart.createTree(currentState.value.data.currentState[0]);      
     })
 
     $('#prevBtn').click(function() {
-      console.log('OUCH!')
+      console.log('Prev')
       $('#nodeData').empty();
       currentState = currentState.prev;
-      createTree(treeInput);      
+      if (currentState && currentState.prev) {
+        curr = getChildren(currentState.value.data.currentState[0])
+        prev = getChildren(currentState.prev.value.data.currentState[0])
+        console.log('prev', prev)
+        checkOptComponents(curr,prev, cache)
+      }
+      D3Chart.createTree(currentState.value.data.currentState[0]);   
     })
 
     $('#nextBtn').click(function() {
-      console.log('OUCH!')
+      console.log('Next')
       $('#nodeData').empty();
       currentState = currentState.next;
-      createTree(treeInput);      
+      if (currentState && currentState.prev) {
+        curr = getChildren(currentState.value.data.currentState[0])
+        prev = getChildren(currentState.prev.value.data.currentState[0])
+        console.log('prev', prev)
+        checkOptComponents(curr,prev, cache)
+      }
+      D3Chart.createTree(currentState.value.data.currentState[0]);   
     })
   });
   
@@ -119,14 +150,17 @@ function createPanel() {
     //count how many times the components is being re-rendered without having any state changes at all
     let count = 0; 
     let current = cache.head; 
+    console.log("before previous")
     let previous = cache.head.prev
+    console.log("is it going in?")
+    console.log("inside opt function", previous)
     while (current!== null && previous !== null && JSON.stringify(current.value.data) === JSON.stringify(previous.value.data)) {
       count++
       current = current.prev;
       previous = previous.prev
     }
     console.log('All components are being re-rendered without any state changes at all for: ', count, " time(s).")
-    return;
+    return [badRendered,goodRendered,count];
   }
 
   function retrieveState(string) {

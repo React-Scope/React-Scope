@@ -20,8 +20,26 @@
   stroke-width: 6px;
 }
 
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-bottom: 100%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 100%;
+}
+
 #tree {
-  height: 500px;
+  /* height: 200px; */
   width: 500px;
   border: 1px black solid;
   margin: auto;
@@ -35,16 +53,27 @@
   margin-top: auto;
   overflow: hidden;
 }
+#opt {
+  min-height: 150px;
+  width: 90%;
+  border: 1px black solid;
+  overflow: hidden;
+  margin-top: auto;
+}
 
 </style>
 
 <body>
   <div id="tree"></div>
-  <div id="nodeData"></div>
+  <!-- <div id="nodeData"></div> -->
   <button id="oldestBtn">Oldest</button>
   <button id="newestBtn">Newest</button>
   <button id="prevBtn">&lt;&lt;</button>
   <button id="nextBtn">&gt;&gt;</button>
+  <button id="zIn">+</button>
+  <button id="zOut">-</button>
+  <div id="opt"></div>
+  <div id="nodeData"></div>
 
 
 <!-- load the d3.js library -->	
