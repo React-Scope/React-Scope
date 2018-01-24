@@ -4,7 +4,7 @@
 	"description": "Visualize your React code as it executes",
 	"scripts": {
 		"build": "webpack",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "jest"
 	},
 	"author": "React Scope",
 	"license": "MIT",
@@ -17,6 +17,7 @@
 		"babel-preset-env": "^1.6.1",
 		"eslint": "^4.14.0",
 		"eslint-config-airbnb": "^16.1.0",
+		"jest": "^22.1.4",
 		"webpack": "^3.10.0"
 	}
- }
+}
