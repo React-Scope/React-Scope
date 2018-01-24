@@ -264,24 +264,11 @@ function traverseSixteen(node, cache) {
     //   keys.forEach((key) => {
     //     props.push(node.memoizedProps[key]);
     //   });
-		// 	// need to parse the props if it is a function or an array or an object
-		// 	if (props.length === 1) component.props = props[0];
-    //  else component.props = props;
-    //   // component.props = props[0] || props;
+    //   // need to parse the props if it is a function or an array or an object
+    //   component.props = props[0] || props;
     // } else {
-    //   component.props = stringifyData(node.memoizedProps);
+    //   component.props = node.memoizedProps;
     // }
-<<<<<<< HEAD
-
-    // component.props = node.memoizedProps;
-    component.props = stringifyData(node.memoizedProps)
-    if (node.type.name) {
-      console.log(node.type.name, ": ", node.memoizedProps)
-    }
-    if (typeof node.type === 'string') {
-      console.log(node.type, ": ", node.memoizedProps)
-    }
-=======
     // if (node.type.name) {
     //   console.log(node.type.name, ":" , node.memoizedProps)
     // }
@@ -289,9 +276,7 @@ function traverseSixteen(node, cache) {
     //   console.log(node.type, ":" , node.memoizedProps)
     // }
     component.props = stringifyData(node.memoizedProps);
->>>>>>> 796cbe395f0ae939b9b8f9bda5e5ef4b367802e4
   }
-
   component.children = [];
   cache.push(component)
   if (node.child !== null) {
