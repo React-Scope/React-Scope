@@ -271,6 +271,7 @@ function traverseSixteen(node, cache) {
     // } else {
     //   component.props = stringifyData(node.memoizedProps);
     // }
+<<<<<<< HEAD
 
     // component.props = node.memoizedProps;
     component.props = stringifyData(node.memoizedProps)
@@ -280,6 +281,15 @@ function traverseSixteen(node, cache) {
     if (typeof node.type === 'string') {
       console.log(node.type, ": ", node.memoizedProps)
     }
+=======
+    // if (node.type.name) {
+    //   console.log(node.type.name, ":" , node.memoizedProps)
+    // }
+    // if (typeof node.type === 'string') {
+    //   console.log(node.type, ":" , node.memoizedProps)
+    // }
+    component.props = stringifyData(node.memoizedProps);
+>>>>>>> 796cbe395f0ae939b9b8f9bda5e5ef4b367802e4
   }
 
   component.children = [];
