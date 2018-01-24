@@ -2,7 +2,7 @@ test('Both App and Row have no state changes.', () => {
   expect(reactOpt(curr1, prev1)).toContain("App", "Row");
 });
 
-test('Component Row is being re-rendered unnecessarily.', () => {
+test('Row is being re-rendered unnecessarily.', () => {
   expect(reactOpt(curr2, prev2)).toContain("Row");
 });
 
