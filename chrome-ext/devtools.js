@@ -40,9 +40,10 @@ function createPanel() {
       // prevNode = cache.head.prev;
       // cleanData = getChildren(reactData);
       console.log(cleanData, 'result');
-      let currentArray = getChildren(cache.head.value.data.currentState[0])
+      let currentArray = getChildren(cache.head.value.data.currentState[0]) //this input and the one below are for checkOptComponent()
       let prevArray = getChildren(cache.head.prev.value.data.currentState[0])
-      return checkOptComponents(currentArray, prevArray, cache);
+      // return checkOptComponents(currentArray, prevArray, cache);
+      return;
     });
   }
 
