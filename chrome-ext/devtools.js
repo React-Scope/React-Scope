@@ -22,16 +22,27 @@ function createPanel() {
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     port.onMessage.addListener((msg) => {
-      console.log('cache', cache);
-      cache.addToHead(msg);
-      reactData = cache.head.value.data.currentState[0];
-      prevNode = cache.head.prev;
-      cleanData = getChildren(reactData);
-      console.log(cleanData, 'result');
-      return;
+      console.log(msg)
+      if (msg.data) {
+        console.log('cache', cache);
+        cache.addToHead(msg.data);
+        reactData = cache.head.value.data.currentState[0];
+        prevNode = cache.head.prev;
+        cleanData = getChildren(reactData);
+        console.log(cleanData, 'result');
+        return;
+      }
     });
-	}
-  
+  }
+
+  // clear cache on refresh of application
+  chrome.runtime.onMessage.addListener(function (req, sender, res) {
+    if (req.refresh === 'true') {
+      cache.head = cache.tail = null;
+      cache.length = 0;
+    }
+  });
+
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
   function checkOptComponents(currentArray, prevArray, cache) {
@@ -125,7 +136,7 @@ function createPanel() {
     return result;
   }
 
-  //May need for d3:
+  // May need for d3:
   // function messageReact(data) { // sending the message to the React App
   //   setTimeout(() => {
   //     window.postMessage({
