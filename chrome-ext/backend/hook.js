@@ -280,6 +280,13 @@ function traverseSixteen(node, cache) {
     // if (typeof node.type === 'string') {
     //   console.log(node.type, ": ", node.memoizedProps)
     // }
+    // if (node.type.name) {
+    //   console.log(node.type.name, ":" , node.memoizedProps)
+    // }
+    // if (typeof node.type === 'string') {
+    //   console.log(node.type, ":" , node.memoizedProps)
+    // }
+
   }
 
   component.children = [];
