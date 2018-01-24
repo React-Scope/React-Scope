@@ -296,6 +296,6 @@ function transmitData(state) {
   // console.log('cache', state);
   // console.log('transmit', state);
   // create a custom event to dispatch for actions for requesting data from background
-  const customEvent = new CustomEvent('React-Scope-Test', { detail: { data: stringifyData(state) } });
+  const customEvent = new CustomEvent('React-Scope', { detail: { data: stringifyData(state) } });
   window.dispatchEvent(customEvent);
 }

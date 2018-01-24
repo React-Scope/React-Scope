@@ -13,7 +13,7 @@ window.addEventListener('message', (event) => {
   return;
 });
 
-window.addEventListener("React-Scope-Test", (message) => {
+window.addEventListener("React-Scope", (message) => {
   chrome.runtime.sendMessage(message.detail)
 }, false)
 
