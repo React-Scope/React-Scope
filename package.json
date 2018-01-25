@@ -9,17 +9,21 @@
 	"author": "React Scope",
 	"license": "MIT",
 	"dependencies": {
+		"bootstrap": "^4.0.0",
 		"d3": "^4.12.2",
 		"jquery": "^3.3.1",
-		"path": "^0.12.7"
+		"path": "^0.12.7",
+		"popper": "^1.0.1"
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",
 		"babel-preset-env": "^1.6.1",
-		"eslint": "^4.14.0",
-		"eslint-config-airbnb": "^16.1.0",
+		"eslint": "^4.16.0",
+		"eslint-config-airbnb-base": "^12.1.0",
+		"eslint-plugin-import": "^2.8.0",
 		"jest": "^22.1.4",
+		"uglifyjs-webpack-plugin": "^1.1.6",
 		"webpack": "^3.10.0"
 	}
 }

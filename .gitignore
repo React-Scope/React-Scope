@@ -1,2 +1,4 @@
 node_modules/
 chrome-ext/build/
+.DS_Store
+chrome-ext/devtools.css
