@@ -1,7 +1,8 @@
-## React Scope
-### Visualize your React code as it executes.
+![React Scope](/Users/kgabinete/coding/codesmith/React-Scope/assets/react_caps.png)
 
-*Add description here*
+___
+
+### Visualize your React code as it executes.
 
 ## Setup
 
@@ -19,12 +20,26 @@ Use your app to make changes to state! (e.g. trigger click events, submit data).
 
 Every state change will update the DOM hierarchy visualization in the side panel and you can click the **next / prev** buttons to navigate between current and previous states of your application.
 
+## Notes
+
+This is an early stable release undergoing continuous development.
+
+If you experience duplicate state/props information being displayed, please try refreshing the page.
+
+## Contributing
+
+If you have suggestions or want to help make React Scope better, feel free to submit an issue/pull request. (Pull requests for typographical errors will likely be ignored.)
+
 ## Authors:
 
-Kevin Gabinete
+Kevin Gabinete - [https://github.com/kgabinete08](https://github.com/kgabinete08)
 
-Jonathan Lee
+Jonathan Lee - [https://github.com/GoingInfinity](https://github.com/GoingInfinity)
 
-Tiffany Lin
+Tiffany Lin - [https://github.com/misstiffanylin](https://github.com/misstiffanylin)
 
-Ringo Yip
+Ringo Yip - [https://github.com/ringoyip0901](https://github.com/ringoyip0901)
+
+___
+
+&copy; React Scope 2018
