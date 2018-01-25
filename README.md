@@ -6,7 +6,7 @@ ___
 
 ## Setup
 
-1. Install React Scope from Chrome web store.
+1. Install React Scope from [Chrome web store](https://chrome.google.com/webstore/detail/react-scope/nkkiickggkoojpdiajhgkbdmfgcinlai).
 2. (Important) Install React Developer Tools if you haven't already.
 3. Enable "Allow access to file URLs" in the extension settings for React Scope.
 4. Run your React application.
