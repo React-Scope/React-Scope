@@ -15,8 +15,6 @@ function createPanel() {
   let treeInput;
   let cleanData = []; // clean data
   let reactData = {}; // current state data
-  // let prevData = []; // previous state data
-  // let prevNode; // track of previous state
 
   function sendMessage() {
     let port = chrome.runtime.connect({
@@ -26,6 +24,7 @@ function createPanel() {
       name: 'connect',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
+
     port.onMessage.addListener(msg => {
       console.log('cache', cache);
       cache.addToHead(msg.data);
@@ -49,15 +48,6 @@ function createPanel() {
       cache.length = 0;
     }
   });
-
-  //on click functionality:
-  //current state variable that starts a this.head;
-  //currentState.value holds the data;
-  //click events:
-  ////next: currentState = currentState.next;
-  ////prev: currentState = currentState.prev;
-  ////oldest: currentState = cache.tail;
-  ////newest: currentState = cache.head;
 
   $(document).ready(function() {
     const stateStatus = (state) => state.value.data.currentState[0];
@@ -86,8 +76,9 @@ function createPanel() {
     });
   });
 
-  //to check which stateful components are being re-rendered without having any state changes
-  //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
+  // to check which stateful components are being re-rendered without having any state changes
+  // the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) 
+  // and getChildren(cache.head.prev.value.data.currentState[0])
   function checkOptComponents(currentArray, prevArray, cache) {
     let badRendered = [];
     let goodRendered = [];
@@ -200,17 +191,6 @@ function createPanel() {
     });
     return result;
   }
-
-  // May need for d3:
-  // function messageReact(data) { // sending the message to the React App
-  //   setTimeout(() => {
-  //     window.postMessage({
-  //       message: 'hello there from devtool.js!',
-  //       data,
-  //     }, '*');
-  //   }, 10);
-  //   return data;
-  // }
 
   // convert data to JSON for storage
   function stringifyData(obj) {

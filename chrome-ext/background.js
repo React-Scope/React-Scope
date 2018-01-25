@@ -41,8 +41,10 @@ chrome.runtime.onMessage.addListener(function (req, sender, res) {
   if (sender.tab) {
     let tabId = sender.tab.id;
     if (tabId in connections) {
+      chrome.pageAction.show(tabId);
       connections[tabId].postMessage(req)
     } else {
+      chrome.pageAction.hide(tabId);
       console.log('Cannot find the tab!');
     }
   } else {

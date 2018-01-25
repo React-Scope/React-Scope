@@ -21,5 +21,14 @@
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     "/backend/hook.js"
-  ]
+  ],
+  "page_action": {
+    "default_icon": "/assets/react_fav_48px.png",
+    "default_title": "React Scope"
+  },
+  "icons": {
+    "16": "/assets/react_fav_16px.png",
+    "48": "/assets/react_fav_48px.png",
+    "128": "/assets/react_fav_128px.png"
+  }
 }
