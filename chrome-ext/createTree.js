@@ -68,7 +68,6 @@ function createTree(data) {
 }
 
 // Collapse the node and all it's children
-
 function getText(node) {
   var textsize = 12;
   var maxChar = rectW / textsize;
@@ -131,7 +130,6 @@ function update(source) {
 
   // Normalize for fixed-depth.
   nodes.forEach(function(d) {
-    console.log(d);
     //if(d.depth == 1){
     d.y = d.depth * 180;
     //}else{
@@ -143,7 +141,6 @@ function update(source) {
 
   // Update the nodes...
   var node = svg.selectAll('g.node').data(nodes, function(d) {
-    console.log(d);
     return d.id || (d.id = ++i);
   });
 
@@ -174,28 +171,27 @@ function update(source) {
       d3
         .select(this)
         .style('stroke-width', 5)
-        .style('stroke', 'yellow');
+        .style('stroke', '#f62459');
       $('#nodeData').empty();
       $('#nodeData').append(
-        '<h2>Name:' + JSON.stringify(d.data.name, null, 2) + '</h2>'
+        `<h5>Name</h5> <p>${JSON.stringify(d.data.name, null, 2)}</p>`
       );
+      if (!d.data.store) {
+        $('#nodeData').append(
+          `<h5>State</h5> <p>${JSON.stringify(d.data.state, null, 2)}</p>`
+        );
+      } 
+      else {
+        $('#nodeData').append(
+          `<h5>Store</h5> <p>${JSON.stringify(d.data.store, null, 2)}</p>`
+        );
+      }
       $('#nodeData').append(
-        '<p>props:' + JSON.stringify(d.data.props, null, 2) + '</p>'
+        `<h5>Props</h5> <p>${JSON.stringify(d.data.props, null, 2)}</p>`
       );
-      $('#nodeData').append(
-        '<p>state:' + JSON.stringify(d.data.state, null, 2) + '</p>'
-      );
-      $('#nodeData').append(
-        '<p>store:' + JSON.stringify(d.data.store, null, 2) + '</p>'
-      );
-
-      // console.log("HI?!", d)
-      console.log('TESTING PROPS', d.data.props);
-      // console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));
-      // console.log('TESTING NAME', d.data.name)
     })
     .style('fill', function(d) {
-      return d._children ? 'lightsteelblue' : '#fff';
+      return d._children ? '#DADFE1' : '#fff';
     });
 
   // Add labels for the nodes
@@ -211,16 +207,6 @@ function update(source) {
       return d.data.name;
     })
     .call(wrap, 80);
-  /*nodeEnter.append('text')
-      .attr("dy", ".35em")
-      .attr("x", function(d) {
-          return d.children || d._children ? -13 : 13;
-      })
-      .attr("text-anchor", function(d) {
-          return d.children || d._children ? "end" : "start";
-      })
-      .text(function(d) { return d.data.name; });
-*/
   // UPDATE
   var nodeUpdate = nodeEnter.merge(node);
 
@@ -240,7 +226,7 @@ function update(source) {
     .attr('stroke', 'black')
     .attr('stroke-width', 1)
     .style('fill', function(d) {
-      return d._children ? 'lightsteelblue' : '#fff';
+      return d._children ? '#DADFE1' : '#fff';
     })
     .attr('cursor', 'pointer');
 
