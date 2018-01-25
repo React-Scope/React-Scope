@@ -71,12 +71,9 @@ function createPanel() {
       $('#nodeData').empty();
       curr = getChildren(cache.head.value.data.currentState[0])
       prev = getChildren(cache.head.prev.value.data.currentState[0])
-      let result = checkOptComponents(curr,prev, cache) // stored optimize data 
-      $('#nodeData').append("<h4>stateful Comp being re-rendered w/o state changes</h4> <p>"+ JSON.stringify(result[0], null, 2)+ "</p>");
-      $('#nodeData').append("<h4>stateful Comp that are re-rendered w/ state changes</h4> <p>"+ JSON.stringify(result[1], null, 2)+ "</p>");
-      $('#nodeData').append("<h4>All components re-render w/o state changes</h4> <p>"+ JSON.stringify(result[2], null, 2)+ "</p>");  
+      let result = checkOptComponents(curr,prev, cache) // stored optimize data  
       Object.keys(result[0]).forEach(val=> {
-        $('#'+val+'').css('fill', 'pink')
+        $('#'+val+'').css('fill', '#f62459')
       })
     });
 

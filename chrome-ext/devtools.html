@@ -12,33 +12,38 @@
   <div class="container">
     <img src="/assets/react_logo.png" id="logo" class="img-fluid" alt="Responsive image">    
     <p>
-    <div id="instructions">
-      <h4>Instructions</h4>
-        <ol>
-          <li>Refresh the browser upon load.</li>
-          <li>Hover over boxes to see component name, state and props.</li>
-          <li>Interact with your web app while using our tool.</li>
-            <ul>
-              <li>Click the "prev" and "next" buttons to see relevant state changes.</li>
-            </ul>
-          <li>Click the "optimize" button to see unnecessarily re-rendered components.</li>
-        </ol>
-    </div>
+        <div id="instructions">
+          <h4>Instructions</h4>
+            <ol>
+              <li>Refresh the browser upon load.</li>
+              <li>Hover over boxes to see component name, state and props.</li>
+              <li>Interact with your web app while using our tool.</li>
+                <ul>
+                  <li>Click the navigation buttons to see relevant state changes.</li>
+                </ul>
+              <li>Click the "Re-Rendering Info" button see which components are potentially being re-rendered unnecessarily. They will appear as red boxes.</li>
+            </ol>
+        </div>
+      <div id="renderingInfo">
+          <button type="button" class="btn btn-light" id="opt">Re-Rendering Info</button>  
+      </div>
     </p>
     <div id="btns">
       <button type="button" class="btn btn-dark" id="oldestBtn">Oldest</button>
         <div id="btnsCenter">
           <button type="button" class="btn btn-dark" id="prevBtn">&lt;&lt;</button>
           <button type="button" class="btn btn-dark" id="nextBtn">&gt;&gt;</button>  
-          <button type="button" class="btn btn-dark" id="zIn">+</button>
-          <button type="button" class="btn btn-dark" id="zOut">-</button>  
-          <button type="button" class="btn btn-dark" id="opt">Optimize</button>  
         </div>
       <button type="button" class="btn btn-dark" id="newestBtn">Newest</button>    
     </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm" id="tree"></div>
+      <div class="col-sm" id="tree">
+        <div id="zoom" class="container" class="row">
+          <button type="button" class="btn btn-light" id="zIn">+</button>
+          <button type="button" class="btn btn-light" id="zOut">-</button>
+        </div>
+      </div>
       <div class="col-sm" id="nodeData">
         <p style="margin-top: 50px; text-align: center"><strong>Tip:</strong> Hover over a box to display component data.</p>
       </div>
