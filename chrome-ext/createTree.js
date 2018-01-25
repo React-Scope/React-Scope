@@ -28,10 +28,10 @@ const zoom = d3.zoom()
 var svg = d3
   .select('#tree')
   .append('svg')
+  .classed('svg-container', true) //test
+  .classed('svg-content-responsive', true) //test
   .attr('preserveAspectRatio', 'xMinyMin meet')
   .attr('viewBox', `0 0 ${height} ${width}`)
-  // .classed('svg-container', true) //test
-  // .classed('svg-content-responsive', true) //test
   .call(
     d3
       .zoom()

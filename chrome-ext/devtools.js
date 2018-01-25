@@ -19,6 +19,7 @@ function createPanel() {
   // let prevNode; // track of previous state
   let curr;
   let prev;
+  
   const addListeners = () => {
     document.querySelector('#zIn').addEventListener('click', D3Chart.zoomIn);
     document.querySelector('#zOut').addEventListener('click', D3Chart.zoomOut);
@@ -66,49 +67,39 @@ function createPanel() {
   $(document).ready(function() {
     const stateStatus = (state) => state.value.data.currentState[0];
 
-    // $('#optimize').click(function() { // test - optimization
-    //   console.log('Optimize')
-    //   $('#opt').empty();
-    //   curr = getChildren(cache.head.value.data.currentState[0])
-    //   prev = getChildren(cache.head.prev.value.data.currentState[0])
-    //   console.log('curr', curr)
-    //   console.log('prev', prev)
-    //   console.log('click cache', cache)
-    //   let result = checkOptComponents(curr,prev, cache) // stored optimize data 
-    //   console.log('results!!!!!!', result)
-    //   $('#opt').append("<p>stateful Comp being re-rendered w/o state changes:"+ JSON.stringify(result[0], null, 2)+ "</p>");
-    //   $('#opt').append("<p>stateful Comp that are re-rendered w/ state changes:"+ JSON.stringify(result[1], null, 2)+ "</p>");
-    //   $('#opt').append("<p>All components re-render w/o state changes:"+ JSON.stringify(result[2], null, 2)+ "</p>");  
-    //   Object.keys(result[0]).forEach(val=> {
-    //     console.log('checking val!!!!~~~~',val)
-    //     $('#'+val+'').css('fill', 'pink')
-    //   })
-    // });
+    $('#opt').click(function() { //optimization
+      $('#nodeData').empty();
+      curr = getChildren(cache.head.value.data.currentState[0])
+      prev = getChildren(cache.head.prev.value.data.currentState[0])
+      let result = checkOptComponents(curr,prev, cache) // stored optimize data 
+      $('#nodeData').append("<h4>stateful Comp being re-rendered w/o state changes</h4> <p>"+ JSON.stringify(result[0], null, 2)+ "</p>");
+      $('#nodeData').append("<h4>stateful Comp that are re-rendered w/ state changes</h4> <p>"+ JSON.stringify(result[1], null, 2)+ "</p>");
+      $('#nodeData').append("<h4>All components re-render w/o state changes</h4> <p>"+ JSON.stringify(result[2], null, 2)+ "</p>");  
+      Object.keys(result[0]).forEach(val=> {
+        $('#'+val+'').css('fill', 'pink')
+      })
+    });
 
     $('#oldestBtn').click(function() {
       $('#nodeData').empty();
-      // $('#opt').empty();
       currentState = cache.tail;
       D3Chart.createTree(stateStatus(currentState));
     });
 
     $('#newestBtn').click(function() {  
       $('#nodeData').empty();
-      // $('#opt').empty();
       currentState = cache.head;
       D3Chart.createTree(stateStatus(currentState));     
     });
 
     $('#prevBtn').click(function() {
       $('#nodeData').empty();
-      // $('#opt').empty();
       currentState = currentState.prev;
       D3Chart.createTree(stateStatus(currentState));   
     });
 
     $('#nextBtn').click(function() {
       $('#nodeData').empty();
-      // $('#opt').empty();
       currentState = currentState.next;
       D3Chart.createTree(stateStatus(currentState));   
     });
@@ -178,7 +169,7 @@ function createPanel() {
       count,
       ' time(s).'
     );
-    return;
+    return [badRendered,goodRendered,count];
   }
 
   function retrieveState(string) {
