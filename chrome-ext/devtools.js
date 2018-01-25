@@ -13,10 +13,6 @@ function createPanel() {
   const cache = new StateCache();
   let currentState;
   let treeInput;
-  let cleanData = []; // clean data
-  let reactData = {}; // current state data
-   // let prevData = []; // previous state data
-  // let prevNode; // track of previous state
   let curr;
   let prev;
   
@@ -41,17 +37,12 @@ function createPanel() {
     });
 
     port.onMessage.addListener(msg => {
-      console.log('cache', cache);
+      // console.log('cache', cache);
       cache.addToHead(msg.data);
       currentState = cache.head;
       treeInput = currentState.value.data.currentState[0];
-      console.log('TREE DATA', treeInput);
+      // console.log('TREE DATA', treeInput);
       D3Chart.createTree(treeInput);
-      // reactData = cache.head.value.data.currentState[0];
-      // prevNode = cache.head.prev;
-      // cleanData = getChildren(reactData);
-      
-      console.log(cleanData, 'result');
       return;
     });
   }
@@ -67,12 +58,12 @@ function createPanel() {
   $(document).ready(function() {
     const stateStatus = (state) => state.value.data.currentState[0];
 
-    $('#opt').click(function() { //optimization
+    $('#opt').click(function() {
       $('#nodeData').empty();
-      curr = getChildren(cache.head.value.data.currentState[0])
-      prev = getChildren(cache.head.prev.value.data.currentState[0])
-      let result = checkOptComponents(curr,prev, cache) // stored optimize data  
-      Object.keys(result[0]).forEach(val=> {
+      curr = getChildren(currentState.value.data.currentState[0])
+      prev = getChildren(currentState.prev.value.data.currentState[0])
+      let result = checkOptComponents(curr, prev, cache) 
+      Object.keys(result).forEach(val=> {
         $('#'+val+'').css('fill', '#f62459')
       })
     });
@@ -166,41 +157,8 @@ function createPanel() {
       count,
       ' time(s).'
     );
-    return [badRendered,goodRendered,count];
-  }
-
-  function retrieveState(string) {
-    switch (string) {
-      case 'current':
-        console.log(cleanData, 'current');
-        prevNode = cache.head.prev;
-        break;
-      case 'previous':
-        if (prevNode.prev) {
-          prevNode = prevNode.prev;
-          prevData = getChildren(
-            prevNode.value.data.currentState[1].children[3]
-          );
-          console.log(prevData, 'previous Data');
-        } else console.log('no more previous state');
-        break;
-      case 'next':
-        if (prevNode.next) {
-          prevNode = prevNode.next;
-          prevData = getChildren(
-            prevNode.value.data.currentState[1].children[3]
-          );
-          console.log(prevNode, 'next data');
-        } else console.log('no more next state');
-        break;
-      // case "next":
-      //     prevData = getChildren();
-      //     console.log(prevData, "initial Data")
-      //     break;
-      default:
-        prevNode = cache.head.prev;
-        console.log(cleanData, 'cleanData');
-    }
+    // return [badRendered,goodRendered,count];
+    return badRendered
   }
 
   function getChildren(child) {
