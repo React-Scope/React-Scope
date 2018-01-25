@@ -24,7 +24,7 @@ Click the "Re-Rendering Info" button see which components are potentially being 
 
 ## Notes
 
-This is an early stable release undergoing continuous development.
+This is an early stable release undergoing continuous development. Currently, this version is optimized for use in developing smaller-scale React applications.
 
 If you experience duplicate state/props information being displayed, please try refreshing the page.
 

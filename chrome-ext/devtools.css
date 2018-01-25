@@ -47,21 +47,21 @@ ol {
   margin-left: 2px;
 }
 
-#tree {
-  height: 450px;
-  width: 500px;
-  border: 1px #212529 solid;
-  overflow: hidden;
-}
-
 #zoom {
   display: flex;
   justify-content: flex-end;
 }
 
+#tree {
+  height: 425px;
+  width: 500px;
+  border: 1px #212529 solid;
+  overflow: hidden;
+}
+
 #nodeData {
   padding: 40px;
-  height: 450px;
+  height: 425px;
   width: 500px;
   border: 1px #212529 solid;
   overflow-y: auto;
