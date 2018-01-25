@@ -3,6 +3,7 @@ import { parseSvg } from "d3-interpolate/src/transform/parse";
 import $ from 'jquery';
 
 var treeData;
+var checkData;
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
     width = 960 - margin.left - margin.right,
@@ -31,6 +32,7 @@ var svg = d3.select("#tree")
     .attr("width","100%")
     // .attr("height", 800)
     .classed('svg-content-responsive', true)
+    // .attr("id","test")
 	.call(d3.zoom()
     // .scaleExtent([1 / 2, 12])
     .on("zoom", zoomed))
@@ -167,7 +169,10 @@ function update(source) {
 								.attr('y',-120)
                 .attr("width", 200)
                 .attr("height", 100)
-                .attr("stroke", "black")
+                .attr("stroke", 'black')
+                .attr('id', function(d) {
+                    return d.data.id
+                })
                 .attr("stroke-width", 1)
                 .on('mouseover', function (d) {
                     d3.selectAll("rect")
@@ -175,13 +180,17 @@ function update(source) {
                       .style('stroke', 'black');
                     d3.select(this)
                       .style('stroke-width', 5)
-                      .style('stroke', 'yellow');
+                      .style('stroke', 'yellow')
                       $('#nodeData').empty();
                       $('#nodeData').append("<h2>Name:"+ JSON.stringify(d.data.name, null, 2)+ "</h2>");
+                      $('#nodeData').append("<p>id:"+ JSON.stringify(d.data.id, null, 2)+ "</p>");
                       $('#nodeData').append("<p>props:"+ JSON.stringify(d.data.props, null, 2)+ "</p>");
                       $('#nodeData').append("<p>state:"+ JSON.stringify(d.data.state, null, 2)+ "</p>");
                       $('#nodeData').append("<p>store:"+ JSON.stringify(d.data.store, null, 2)+ "</p>");
-
+                    if (Object.keys(checkData[0]).indexOf(d.data.id) !== -1) {
+                        d3.select(this)
+                            .style('stroke', 'red')
+                    }
                     // console.log("HI?!", d)
                     console.log('TESTING PROPS', d.data.props)
                     // console.log('TESTING STATE', JSON.stringify(d.data.state, null, 2));   
@@ -312,8 +321,9 @@ function update(source) {
     update(d);
   }
 
-  export function createTree(data) {
+  export function createTree(data, optData) {
     treeData = data;
+    checkData = optData
     // Assigns parent, children, height, depth
     root = d3.hierarchy(treeData, function(d) { return d.children; });
       

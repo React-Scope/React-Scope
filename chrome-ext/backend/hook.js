@@ -231,13 +231,17 @@ function traverseFifteen(node, cache) {
 function traverseSixteen(node, cache) {
   // LinkedList Style
   let component = {
-    name: '',
+		id: null,
+		name: '',
     state: null,
     props: null,
     children: [],
     store: null,
   };
 
+	if (node._debugID) {
+		component.id = node._debugID
+	}
   if (node.type) {
     if (node.type.name) {
       component.name = node.type.name;

@@ -48,6 +48,7 @@ function createPanel() {
       // reactData = cache.head.value.data.currentState[0];
       // prevNode = cache.head.prev;
       // cleanData = getChildren(reactData);
+      
       console.log(cleanData, 'result');
       return;
     });
@@ -63,9 +64,31 @@ function createPanel() {
       ////newest: currentState = cache.head;
  
   $(document).ready(function() {
+    $('#optimize').click(function() {
+      console.log('Optimize')
+      $('#opt').empty();
+      curr = getChildren(cache.head.value.data.currentState[0])
+      prev = getChildren(cache.head.prev.value.data.currentState[0])
+      console.log('curr', curr)
+      console.log('prev', prev)
+      console.log('click cache', cache)
+      let result = checkOptComponents(curr,prev, cache) // stored optimize data 
+      console.log('results!!!!!!', result)
+      $('#opt').append("<p>stateful Comp being re-rendered w/o state changes:"+ JSON.stringify(result[0], null, 2)+ "</p>");
+      $('#opt').append("<p>stateful Comp that are re-rendered w/ state changes:"+ JSON.stringify(result[1], null, 2)+ "</p>");
+      $('#opt').append("<p>All components re-render w/o state changes:"+ JSON.stringify(result[2], null, 2)+ "</p>");  
+      Object.keys(result[0]).forEach(val=> {
+        console.log('checking val!!!!~~~~',val)
+        $('#'+val+'').css('fill', 'pink')
+      })
+      // D3Chart.createTree(currentState.value.data.currentState[0], result);
+      
+    })
+
     $('#oldestBtn').click(function() {
       console.log('Tail')
       $('#nodeData').empty();
+      $('#opt').empty();
       currentState = cache.tail;
       D3Chart.createTree(currentState.value.data.currentState[0]);
     })
@@ -75,41 +98,22 @@ function createPanel() {
       $('#nodeData').empty();
       $('#opt').empty();
       currentState = cache.head;
-      if (currentState && currentState.prev) {
-        curr = getChildren(currentState.value.data.currentState[0])
-        prev = getChildren(currentState.prev.value.data.currentState[0])
-        console.log('prev', prev)
-        let result = checkOptComponents(curr,prev, cache)
-        $('#opt').append("<p>stateful Comp re-render w/o state changes:"+ JSON.stringify(result[0], null, 2)+ "</p>");
-        $('#opt').append("<p>stateful Comp re-render w/ state changes:"+ JSON.stringify(result[1], null, 2)+ "</p>");
-        $('#opt').append("<p>All components re-render w/o state changes:"+ JSON.stringify(result[2], null, 2)+ "</p>");
-      }
-      D3Chart.createTree(currentState.value.data.currentState[0]);      
+      D3Chart.createTree(currentState.value.data.currentState[0]);     
     })
 
     $('#prevBtn').click(function() {
       console.log('Prev')
       $('#nodeData').empty();
+      $('#opt').empty();
       currentState = currentState.prev;
-      if (currentState && currentState.prev) {
-        curr = getChildren(currentState.value.data.currentState[0])
-        prev = getChildren(currentState.prev.value.data.currentState[0])
-        console.log('prev', prev)
-        checkOptComponents(curr,prev, cache)
-      }
       D3Chart.createTree(currentState.value.data.currentState[0]);   
     })
 
     $('#nextBtn').click(function() {
       console.log('Next')
       $('#nodeData').empty();
+      $('#opt').empty();
       currentState = currentState.next;
-      if (currentState && currentState.prev) {
-        curr = getChildren(currentState.value.data.currentState[0])
-        prev = getChildren(currentState.prev.value.data.currentState[0])
-        console.log('prev', prev)
-        checkOptComponents(curr,prev, cache)
-      }
       D3Chart.createTree(currentState.value.data.currentState[0]);   
     })
   });
@@ -118,29 +122,30 @@ function createPanel() {
   //to check which stateful components are being re-rendered without having any state changes
   //the currentArray and prevArray are the return values of getChildren(cache.head.value.data.currentState[0]) and getChildren(cache.head.prev.value.data.currentState[0])
   function checkOptComponents(currentArray, prevArray, cache) {
-    let badRendered = [];
-    let goodRendered = [];
+    let badRendered = {};
+    let goodRendered = {};
     //check for state(s)
     for (let i = 0 ; i < currentArray.length; i++) {
       if (currentArray[i].state !== null) {
         if (JSON.stringify(currentArray[i].state) === JSON.stringify(prevArray[i].state)) {
           if (currentArray[i].name !== undefined) {
-            badRendered.push(currentArray[i].name)
+            // badRendered.push(currentArray[i].name)
+            badRendered[currentArray[i].id] = currentArray[i].name
           }
         }
         else if (currentArray[i].name !== undefined) {
-            goodRendered.push(currentArray[i].name)
+          goodRendered[currentArray[i].id] = currentArray[i].name
         }
       }
       //check the store(s)
       if (currentArray[i].store !== null) {
         if (JSON.stringify(currentArray[i].store) === JSON.stringify(prevArray[i].store)) {
           if (currentArray[i].name !== undefined) {
-            badRendered.push(currentArray[i].name)
+            badRendered[currentArray[i].id] = currentArray[i].name
           }
         }
         else if (currentArray[i].name !== undefined) {
-          goodRendered.push(currentArray[i].name)
+          goodRendered[currentArray[i].id] = currentArray[i].name
         }
       }
     }
@@ -197,13 +202,15 @@ function createPanel() {
     let result = [];
     const node = child;
 
-    if (node.name !== 'div') {
+    // if (node.name !== 'div') {
       result.push({
         name: node.name,
         props: node.props,
         state: node.state,
+        id: node.id,
+        store: node.store,
       });
-    }
+    // }
 
     Object.keys(node.children).forEach((key) => {
       result = result.concat(getChildren(node.children[key]));
