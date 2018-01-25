@@ -48,7 +48,7 @@ ol {
 }
 
 #tree {
-  height: 450px;
+  height: 425px;
   width: 500px;
   border: 1px #212529 solid;
   overflow: hidden;
@@ -61,7 +61,7 @@ ol {
 
 #nodeData {
   padding: 40px;
-  height: 450px;
+  height: 425px;
   width: 500px;
   border: 1px #212529 solid;
   overflow-y: auto;
