@@ -4,6 +4,8 @@ ___
 
 ### Visualize your React components as you interact with your application.
 
+![React Scope screenshot](/assets/react-scope-screenshot-updated.png)
+
 ## Setup
 
 1. Install React Scope from [Chrome web store](https://chrome.google.com/webstore/detail/react-scope/nkkiickggkoojpdiajhgkbdmfgcinlai).
