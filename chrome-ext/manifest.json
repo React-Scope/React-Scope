@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "React-Scope",
-  "description": "Visualize your React code as it executes",
-  "version": "1.0",
+  "description": "Visualize your React components as you interact with your application",
+  "version": "1.1",
   "permissions": [
     "*://*/*"
   ],
