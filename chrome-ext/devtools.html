@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="devtools.min.css">  
+  <link rel="stylesheet" href="devtools.css">  
 </head>
 
 
@@ -21,7 +21,7 @@
                 <ul>
                   <li>Click the navigation buttons to see relevant state changes.</li>
                 </ul>
-              <li>Click the "Re-Rendering Info" button see which components are potentially being re-rendered unnecessarily. They will appear as red boxes.</li>
+              <li>Click the "Re-Rendering Info" button to see the components that are potentially being re-rendered unnecessarily.They will appear as red boxes.</li>
             </ol>
         </div>
       <div id="renderingInfo">
@@ -38,13 +38,13 @@
     </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm" id="tree">
+      <div class="col-6" id="tree">
         <div id="zoom" class="container" class="row">
           <button type="button" class="btn btn-light" id="zIn">+</button>
           <button type="button" class="btn btn-light" id="zOut">-</button>
         </div>
       </div>
-      <div class="col-sm" id="nodeData">
+      <div class="col-6" id="nodeData">
         <p style="margin-top: 50px; text-align: center"><strong>Tip:</strong> Hover over a box to display component data.</p>
       </div>
     </div>
