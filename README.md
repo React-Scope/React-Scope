@@ -4,9 +4,11 @@ ___
 
 ### Visualize your React components as you interact with your application.
 
+![React Scope screenshot](/assets/react-scope-screenshot-updated.png)
+
 ## Setup
 
-1. Install React Scope from Chrome web store.
+1. Install React Scope from [Chrome web store](https://chrome.google.com/webstore/detail/react-scope/nkkiickggkoojpdiajhgkbdmfgcinlai).
 2. (Important) Install React Developer Tools if you haven't already.
 3. Enable "Allow access to file URLs" in the extension settings for React Scope.
 4. Run your React application.
@@ -28,9 +30,11 @@ This is an early stable release undergoing continuous development. Currently, th
 
 If you experience duplicate state/props information being displayed, please try refreshing the page.
 
-## Contributing
+## Contact
 
-If you have suggestions or want to help make React Scope better, feel free to submit an issue/pull request. (Pull requests for typographical errors will likely be ignored.)
+If you have suggestions or want to help make React Scope better, feel free to submit an issue or contact us at reactscope@gmail.com. (Pull requests for typographical errors will likely be ignored.)
+
+Check us out at [reactscope.com](reactscope.com)
 
 ## Authors:
 
