@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "airbnb"
-  ],
+  "extends": "airbnb-base",
   "env": {
     "browser": true
   },
