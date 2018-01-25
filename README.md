@@ -30,7 +30,7 @@ If you experience duplicate state/props information being displayed, please try 
 
 ## Contributing
 
-If you have suggestions or want to help make React Scope better, feel free to submit an issue/pull request. (Pull requests for typographical errors will likely be ignored.)
+If you have suggestions or want to help make React Scope better, feel free to submit an issue or contact us at reactscope@gmail.com. (Pull requests for typographical errors will likely be ignored.)
 
 ## Authors:
 
