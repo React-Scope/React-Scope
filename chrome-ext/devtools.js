@@ -62,28 +62,24 @@ function createPanel() {
   $(document).ready(function() {
     const stateStatus = (state) => state.value.data.currentState[0];
     $('#oldestBtn').click(function() {
-      console.log('OUCH!');
       $('#nodeData').empty();
       currentState = cache.tail;
       createTree(stateStatus(currentState));
     });
 
     $('#newestBtn').click(function() {
-      console.log('OUCH!');
       $('#nodeData').empty();
       currentState = cache.head;
       createTree(stateStatus(currentState));
     });
 
     $('#prevBtn').click(function() {
-      console.log('OUCH!');
       $('#nodeData').empty();
       currentState = currentState.prev;
       createTree(stateStatus(currentState));
     });
 
     $('#nextBtn').click(function() {
-      console.log('OUCH!');
       $('#nodeData').empty();
       currentState = currentState.next;
       createTree(stateStatus(currentState));
