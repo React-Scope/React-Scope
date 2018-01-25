@@ -1,4 +1,4 @@
-![React Scope](/Users/kgabinete/coding/codesmith/React-Scope/assets/react_caps.png)
+![React Scope](/assets/react_caps.png)
 
 ___
 
