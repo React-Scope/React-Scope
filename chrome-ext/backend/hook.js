@@ -169,6 +169,7 @@ function traverseFifteen(node, cache) {
     state: null,
     props: null,
     children: {},
+    store: null,
   };
 
   if (targetNode.type) {
@@ -230,12 +231,17 @@ function traverseFifteen(node, cache) {
 function traverseSixteen(node, cache) {
   // LinkedList Style
   let component = {
-    name: '',
+		id: null,
+		name: '',
     state: null,
     props: null,
     children: [],
+    store: null,
   };
 
+	if (node._debugID) {
+		component.id = node._debugID
+	}
   if (node.type) {
     if (node.type.name) {
       component.name = node.type.name;
@@ -267,13 +273,15 @@ function traverseSixteen(node, cache) {
     // } else {
     //   component.props = node.memoizedProps;
     // }
+
+    // component.props = node.memoizedProps;
+    component.props = stringifyData(node.memoizedProps)
     // if (node.type.name) {
-    //   console.log(node.type.name, ":" , node.memoizedProps)
+    //   console.log(node.type.name, ": ", node.memoizedProps)
     // }
     // if (typeof node.type === 'string') {
-    //   console.log(node.type, ":" , node.memoizedProps)
+    //   console.log(node.type, ": ", node.memoizedProps)
     // }
-    component.props = stringifyData(node.memoizedProps);
   }
   component.children = [];
   cache.push(component)
@@ -286,6 +294,7 @@ function traverseSixteen(node, cache) {
 }
 
 function transmitData(state) {
+  // console.log('cache', state);
   // console.log('transmit', state);
   // create a custom event to dispatch for actions for requesting data from background
   const customEvent = new CustomEvent('React-Scope', { detail: { data: stringifyData(state) } });
