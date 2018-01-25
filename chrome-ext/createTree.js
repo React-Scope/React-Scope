@@ -1,7 +1,9 @@
 import * as d3 from 'd3';
+import { parseSvg } from "d3-interpolate/src/transform/parse";
 import $ from 'jquery';
 
 var treeData;
+var checkData;
 // Set the dimensions and margins of the diagram
 var margin = { top: 90, right: 90, bottom: 90, left: 90 },
   width = 960 - margin.left - margin.right,
@@ -14,9 +16,20 @@ var i = 0,
   rectW = 60,
   root;
 
+//test
+const minZoom = 0.05; // min zoom distance
+const maxZoom = 2; // max zoom distance
+
+//test
+const zoom = d3.zoom()
+  .scaleExtent([minZoom, maxZoom])
+  .on('zoom', zoomed);
+
 var svg = d3
   .select('#tree')
   .append('svg')
+  .classed('svg-container', true) //test
+  .classed('svg-content-responsive', true) //test
   .attr('preserveAspectRatio', 'xMinyMin meet')
   .attr('viewBox', `0 0 ${height} ${width}`)
   .call(
@@ -163,6 +176,9 @@ function update(source) {
     .attr('height', 100)
     .attr('stroke', 'black')
     .attr('stroke-width', 1)
+    .attr('id', function(d) {//test
+      return d.data.id
+  })
     .on('mouseover', function(d) {
       d3
         .selectAll('rect')
@@ -324,4 +340,46 @@ function click(d) {
   update(d);
 }
 
-export default createTree;
+  export function createTree(data, optData) {
+    treeData = data;
+    checkData = optData
+    // Assigns parent, children, height, depth
+    root = d3.hierarchy(treeData, function(d) { return d.children; });
+      
+    //form x and y axis
+    root.x0 = width/2;
+    root.y0 = height/2;
+    
+    
+    // Collapse after the second level
+    // root.children.forEach(collapse);
+    
+    update(root);
+    };
+
+  export function zoomIn() {
+    const currentTransform = d3.select('.svg-content-responsive > g').attr('transform');
+    const { translateX, translateY, scaleX } = parseSvg(currentTransform);
+    let newZoom = scaleX * 1.5;
+    newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
+  
+    const transform = d3.zoomIdentity
+      .translate(translateX, translateY)
+      .scale(newZoom);
+    d3.select('.svg-content-responsive').transition().duration(1).call(zoom.transform, transform);
+  }
+  
+  /** Zooms out D3 graph */
+  export function zoomOut() {
+    const currentTransform = d3.select('.svg-content-responsive > g').attr('transform');
+    const { translateX, translateY, scaleX } = parseSvg(currentTransform);
+    let newZoom = scaleX / 1.5;
+    newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
+  
+    const transform = d3.zoomIdentity
+      .translate(translateX, translateY)
+      .scale(newZoom);
+    d3.select('.svg-content-responsive').transition().duration(1).call(zoom.transform, transform);
+  }
+  
+// export default createTree;

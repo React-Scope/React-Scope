@@ -231,13 +231,17 @@ function traverseFifteen(node, cache) {
 function traverseSixteen(node, cache) {
   // LinkedList Style
   let component = {
-    name: '',
+		id: null,
+		name: '',
     state: null,
     props: null,
     children: [],
     store: null,
   };
 
+	if (node._debugID) {
+		component.id = node._debugID
+	}
   if (node.type) {
     if (node.type.name) {
       component.name = node.type.name;
@@ -264,12 +268,10 @@ function traverseSixteen(node, cache) {
     //   keys.forEach((key) => {
     //     props.push(node.memoizedProps[key]);
     //   });
-		// 	// need to parse the props if it is a function or an array or an object
-		// 	if (props.length === 1) component.props = props[0];
-    //  else component.props = props;
-    //   // component.props = props[0] || props;
+    //   // need to parse the props if it is a function or an array or an object
+    //   component.props = props[0] || props;
     // } else {
-    //   component.props = stringifyData(node.memoizedProps);
+    //   component.props = node.memoizedProps;
     // }
 
     // component.props = node.memoizedProps;
@@ -281,7 +283,6 @@ function traverseSixteen(node, cache) {
     //   console.log(node.type, ": ", node.memoizedProps)
     // }
   }
-
   component.children = [];
   cache.push(component)
   if (node.child !== null) {
