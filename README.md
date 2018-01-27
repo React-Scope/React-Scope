@@ -22,8 +22,6 @@ Use your app to make changes to state (e.g., trigger click events, submit data, 
 
 Every state change will update the visualization. You can click the **next / prev** buttons to navigate between current and previous states of your application.
 
-Click the "Re-Rendering Info" button see which components are potentially being re-rendered unnecessarily. The nodes will appear in red.
-
 ## Notes
 
 This is an early stable release undergoing continuous development. Currently, this version is optimized for use in developing smaller-scale React applications.
